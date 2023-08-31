@@ -1,0 +1,105 @@
+import java.util.Random;
+import java.util.*;
+public class NumGame
+{
+    Scanner in = new Scanner(System.in);
+    // int guessnum;
+    int score = 100;
+
+    boolean gues(int guessnum, int randomnum, int score, int count) {
+        System.out.println("Random number is:"+randomnum);
+        if (randomnum == guessnum)
+        {
+            return true;
+        }
+        else if (randomnum < guessnum)
+        {
+            if (guessnum - randomnum > 10)
+            {
+                System.out.println("Your Number is too high,Guess Again");
+                System.out.println("Your Score is: " + score);
+                return false;
+            }
+            else
+            {
+                System.out.println("Your Number is high,Guess Again");
+                System.out.println("Your Score is: " + score);
+                return false;
+            }
+        }
+        else if (randomnum > guessnum)
+        {
+            if (randomnum - guessnum > 10)
+            {
+                System.out.println("Your Number is too low,Guess Again");
+                System.out.println("Your Score is: " + score);
+                return false;
+            }
+            else
+            {
+                System.out.println("Your Number is low,Guess Again");
+                System.out.println("Your Score is: " + score);
+                return false;
+            }
+        }
+        return false;
+    }
+    void play(int score)
+    {
+        int count = 0;
+        //int score = 100, fn = 0;
+        Random rand = new Random();
+        int randomnum = rand.nextInt(100) + 1;
+        while (count <= 10)
+        {
+            System.out.println("Enter the Number(1-100):");
+            int num = in.nextInt();
+            if(num>=1 && num<=100)
+            {
+                boolean ans = gues(num, randomnum, score, count);
+                score = score - 5;
+                count++;
+                if (ans)
+                {
+                    System.out.println("Congragulations,You Win!\nThe Correct number is " + num);
+                    System.out.println("Number of Attempts:" + count);
+                    System.out.println("Your Score is: " + score);
+                    System.out.println();
+                    System.out.println("Are You Play Again?");
+                    String again = in.next();
+                    if (again.equals("Yes")|| again.equals("yes") || again.equals("YES"))
+                    {
+                        play(100);
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if(count == 10 || score < 55 )
+                {
+                System.out.println("You Reached Number of Attempts!\nBetter Luck Next Time");
+                System.out.println("Are You Play Again?");
+                     String again = in.next();
+                     if (again.equals("Yes")|| again.equals("yes") || again.equals("YES"))
+                     {
+                         play(100);
+                     }
+                     else
+                     {
+                         break;
+                     }
+                }
+            }
+            else{
+                System.out.println("Enter only 1 to 100");
+                play(score);
+            }
+        }
+    }
+    public static void main(String[] args) {
+        System.out.println("You have only 10 attempts\nAnd Your Initial Score is 100");
+        NumGame t = new NumGame();
+        t.play(100);
+    }
+}
